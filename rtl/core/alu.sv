@@ -9,6 +9,7 @@ always_comb begin
     3'd1: y = a - b;
     3'd2: y = a & b;
     3'd3: y = a | b;
+    3'd4: y = a ^ b;
     default: y = 32'd0;
   endcase
 end
