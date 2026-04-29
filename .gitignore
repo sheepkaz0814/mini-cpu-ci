@@ -1,0 +1,13 @@
+# Verilator
+obj_dir/
+*.vcd
+*.log
+*.dmp
+
+# build
+build/
+sim_build/
+
+# editor
+.vscode/
+.DS_Store
