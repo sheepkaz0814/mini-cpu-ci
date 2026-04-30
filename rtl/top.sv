@@ -21,13 +21,13 @@ module top;
 
 `timescale 1ps/1ps
 
-module top;
+module cpu_top;
 
   // -----------------
   // クロック
   // -----------------
   logic clk = 0;
-  always #5 clk = ~clk;
+  //always #5 clk = ~clk;
 
   // -----------------
   // 命令（固定：ADDI r1, r0, 5）
@@ -104,6 +104,7 @@ module top;
   // -----------------
   // テスト
   // -----------------
+ /*
   initial begin
     #20;
 
@@ -123,4 +124,5 @@ module top;
     $dumpfile("wave.vcd");
     $dumpvars(0, top);
   end
+  */
 endmodule

@@ -1,11 +1,25 @@
-TOP=top
+TOP_RTL=cpu_top
+TOP_TB=test_top
 
-all:
-	verilator -binary -j 0 --trace ../rtl/top.sv ../rtl/core/alu.sv ../rtl/core/regfile.sv ../rtl/core/decoder.sv
-	./obj_dir/Vtop
+TOPLEVEL_LANG=verilog
+SIM=verilator
+TOPLEVEL=$(TOP_RTL)
+MODULE=$(TOP_TB)
+export PYTHONPATH := ../tb/cocotb
 
-clean:
-	rm -rf obj_dir
+VERILOG_SOURCES = ../rtl/top.sv \
+				../rtl/core/alu.sv \
+				../rtl/core/regfile.sv \
+				../rtl/core/decoder.sv
 
-wave:
-	gtkwave wave.vcd &
+include $(shell cocotb-config --makefiles)/Makefile.sim
+
+#verilog_all:
+#	verilator -binary -j 0 --trace ../rtl/top.sv ../rtl/core/alu.sv ../rtl/core/regfile.sv ../rtl/core/decoder.sv
+#	./obj_dir/Vtop
+#
+#clean:
+#	rm -rf obj_dir
+#
+#wave:
+#	gtkwave wave.vcd &
