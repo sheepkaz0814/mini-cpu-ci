@@ -18,6 +18,9 @@ module top;
     $finish(0);
   end
 */
+
+`timescale 1ps/1ps
+
 module top;
 
   // -----------------
@@ -104,13 +107,20 @@ module top;
   initial begin
     #20;
 
+    @(posedge clk);
+    #1; // クロックエッジから少し遅らせる 
     if (u_regfile.regs[1] != 5) begin
       $display("FAIL: r1 = %0d", u_regfile.regs[1]);
       $finish(1);
     end
-
-    $display("PASS: r1 = %0d", u_regfile.regs[1]);
-    $finish(0);
+    else begin
+      $display("PASS: r1 = %0d", u_regfile.regs[1]);
+      $finish(0);
+    end
   end
 
+  initial begin
+    $dumpfile("wave.vcd");
+    $dumpvars(0, top);
+  end
 endmodule

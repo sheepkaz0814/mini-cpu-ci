@@ -22,6 +22,8 @@ assign rs1    = instr[19:15];
 assign rs2    = instr[24:20];
 assign funct7 = instr[31:25];
 
+assign imm = {{20{instr[31]}}, instr[31:20]}; // 符号拡張 I-typeの即値
+
 always_comb begin
   // デフォルト（重要）
   alu_op  = 3'd0;
