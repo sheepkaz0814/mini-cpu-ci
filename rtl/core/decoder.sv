@@ -1,5 +1,5 @@
 module decoder (
-  input  logic [31:0] instr,
+  input  logic [31:0] inst,
   // レジスタ
   output logic [4:0] rs1, rs2, rd,
   // 即値
@@ -15,14 +15,14 @@ logic [6:0] opcode;
 logic [2:0] funct3;
 logic [6:0] funct7;
 
-assign opcode = instr[6:0];
-assign rd     = instr[11:7];
-assign funct3 = instr[14:12];
-assign rs1    = instr[19:15];
-assign rs2    = instr[24:20];
-assign funct7 = instr[31:25];
+assign opcode = inst[6:0];
+assign rd     = inst[11:7];
+assign funct3 = inst[14:12];
+assign rs1    = inst[19:15];
+assign rs2    = inst[24:20];
+assign funct7 = inst[31:25];
 
-assign imm = {{20{instr[31]}}, instr[31:20]}; // 符号拡張 I-typeの即値
+assign imm = {{20{inst[31]}}, inst[31:20]}; // 符号拡張 I-typeの即値
 
 always_comb begin
   // デフォルト（重要）

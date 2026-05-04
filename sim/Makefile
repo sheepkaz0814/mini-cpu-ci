@@ -10,7 +10,9 @@ export PYTHONPATH := ../tb/cocotb
 VERILOG_SOURCES = ../rtl/top.sv \
 				../rtl/core/alu.sv \
 				../rtl/core/regfile.sv \
-				../rtl/core/decoder.sv
+				../rtl/core/decoder.sv \
+				../rtl/core/pc.sv \
+				../rtl/mem/inst_mem.sv
 
 include $(shell cocotb-config --makefiles)/Makefile.sim
 

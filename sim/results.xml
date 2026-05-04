@@ -1,6 +1,6 @@
 <testsuites name="results">
   <testsuite name="all" package="all">
-    <property name="random_seed" value="1777554374" />
-    <testcase name="test_cpu" classname="test_top" file="/Users/kazutouehara/verilog/mini-cpu-ci/tb/cocotb/test_top.py" lineno="6" time="0.00036597251892089844" sim_time_ns="41.001" ratio_time="112033.00215244299" />
+    <property name="random_seed" value="1777913108" />
+    <testcase name="test_cpu" classname="test_top" file="/Users/kazutouehara/verilog/mini-cpu-ci/tb/cocotb/test_top.py" lineno="6" time="0.00047326087951660156" sim_time_ns="91.001" ratio_time="192285.06715566752" />
   </testsuite>
 </testsuites>

@@ -1,6 +1,6 @@
 module inst_mem (
   input  logic [31:0] addr,
-  output logic [31:0] instr
+  output logic [31:0] inst
 );
 
   logic [31:0] mem [0:15];
@@ -11,6 +11,6 @@ module inst_mem (
     mem[1] = 32'b000000000010_00001_000_00010_0010011; // ADDI r2, r1, 2
   end
 
-  assign instr = mem[addr[5:2]]; // wordアドレス
+  assign inst = mem[addr[5:2]]; // wordアドレス
 
 endmodule

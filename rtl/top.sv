@@ -32,12 +32,12 @@ module cpu_top;
   // -----------------
   // 命令（固定：ADDI r1, r0, 5）
   // -----------------
-  logic [31:0] instr;
+//  logic [31:0] inst;
 
-  initial begin
-    // opcode=0010011, funct3=000, rs1=0, rd=1, imm=5
-    instr = 32'b000000000101_00000_000_00001_0010011;
-  end
+//  initial begin
+//    // opcode=0010011, funct3=000, rs1=0, rd=1, imm=5
+//    instr = 32'b000000000101_00000_000_00001_0010011;
+//  end
 
   // -----------------
   // decoder出力
@@ -51,7 +51,7 @@ module cpu_top;
   logic rst;
 
   decoder u_decoder (
-    .instr(instr),
+    .inst(inst),
     .rs1(rs1),
     .rs2(rs2),
     .rd(rd),
