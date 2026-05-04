@@ -46,6 +46,9 @@ module cpu_top;
   logic [31:0] imm;
   logic [2:0] alu_op;
   logic reg_we, mem_we, mem_re, use_imm;
+  logic [31:0] pc;
+  logic [31:0] inst;
+  logic rst;
 
   decoder u_decoder (
     .instr(instr),
@@ -101,6 +104,16 @@ module cpu_top;
   // -----------------
   assign wb_data = alu_y;
 
+pc u_pc (
+  .clk(clk),
+  .rst(rst),
+  .pc(pc)
+);
+
+inst_mem u_imem (
+  .addr(pc),
+  .inst(inst)
+);
   // -----------------
   // テスト
   // -----------------
