@@ -11,3 +11,7 @@ sim_build/
 # editor
 .vscode/
 .DS_Store
+
+results.xml
+__pycache__/
+*.pyc
