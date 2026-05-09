@@ -60,7 +60,8 @@ module cpu_top;
     .reg_we(reg_we),
     .mem_we(mem_we),
     .mem_re(mem_re),
-    .use_imm(use_imm)
+    .use_imm(use_imm),
+    .mem_to_reg(mem_to_reg)
   );
 
   // -----------------
@@ -68,6 +69,11 @@ module cpu_top;
   // -----------------
   logic [31:0] rs1_data, rs2_data;
   logic [31:0] wb_data;
+  logic        mem_to_reg;
+  logic [31:0] mem_rdata;
+
+  assign mem_to_reg = 1'b0; // Load Memory Data to Register File (今回はALUの結果をレジスタに書き込む)
+  assign mem_rdata = 32'hDEADBEEF;
 
   regfile u_regfile (
     .clk(clk),
@@ -102,7 +108,7 @@ module cpu_top;
   // -----------------
   // write back
   // -----------------
-  assign wb_data = alu_y;
+  assign wb_data = (mem_to_reg) ? mem_rdata : alu_y;
 
 pc u_pc (
   .clk(clk),

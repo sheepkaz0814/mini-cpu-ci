@@ -1,5 +1,6 @@
 module decoder (
   input  logic [31:0] inst,
+  input  logic        mem_to_reg, // Load Memory Data to Register File
   // レジスタ
   output logic [4:0] rs1, rs2, rd,
   // 即値
