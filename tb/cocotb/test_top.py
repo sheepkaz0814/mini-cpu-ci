@@ -27,6 +27,7 @@ async def test_cpu(dut):
     r4 = dut.u_regfile.regs[4].value
     r5 = dut.u_regfile.regs[5].value
     r6 = dut.u_regfile.regs[6].value
+    print(f"r1={int(r1)} r2={int(r2)} r3={int(r3)} r4={int(r4)} r5={int(r5)} r6={int(r6)}")
 #    print(f"Cycle {i}: r1 = {r1}, r2 = {r2}")
 #    assert r1 == 5, f"FAILED: Expected r1 to be 5, but got {r1}"
 #    assert r2 == 3, f"FAILED: Expected r2 to be 3, but got {r2}"
@@ -35,6 +36,15 @@ async def test_cpu(dut):
 #    assert r5 == 1, f"FAILED: Expected r5 to be 1, but got {r5}"
 #    assert r6 == 7, f"FAILED: Expected r6 to be 7, but got {r6}"
 
+    r1 = int(dut.u_regfile.regs[1].value)
+    r2 = int(dut.u_regfile.regs[2].value)
     r3 = int(dut.u_regfile.regs[3].value)
+
+    assert r1 == 16, \
+        f"FAILED: Expected r1=16, got {r1}"
+
+    assert r2 == 123, \
+        f"FAILED: Expected r2=123, got {r2}"
+
     assert r3 == 123, \
-    f"FAILED: Expected r3=123, got {r3}"
+        f"FAILED: Expected r3=123, got {r3}"
