@@ -17,6 +17,19 @@ logic [6:0] opcode;
 logic [2:0] funct3;
 logic [6:0] funct7;
 
+// Opcode definitions
+localparam OPC_RTYPE = 7'b0110011;
+localparam OPC_ITYPE = 7'b0010011;
+localparam OPC_LOAD  = 7'b0000011;
+localparam OPC_STORE = 7'b0100011;
+
+// ALU operations
+localparam ALU_ADD = 3'd0;
+localparam ALU_SUB = 3'd1;
+localparam ALU_AND = 3'd2;
+localparam ALU_OR  = 3'd3;
+localparam ALU_INV = 3'd7;
+
 assign opcode = inst[6:0];
 assign rd     = inst[11:7];
 assign funct3 = inst[14:12];
@@ -28,7 +41,7 @@ assign funct7 = inst[31:25];
 always_comb begin
   imm = 32'd0;
 
-  case (opcode)
+  unique case (opcode)
     // I-type (ADDI/LW)
     7'b0010011,
     7'b0000011:
@@ -45,52 +58,54 @@ end
 
 always_comb begin
   // デフォルト（重要）
-  alu_op  = 3'd0;
+  alu_op  = ALU_ADD;
   reg_we  = 0;
   mem_we  = 0;
   mem_re  = 0;
   use_imm = 0;
   mem_to_reg = 0;
 
-  case (opcode)
+  unique case (opcode)
 
     // -----------------
     // R-type
     // -----------------
-    7'b0110011: begin
+    OPC_RTYPE: begin
       reg_we = 1;
       use_imm = 0;
 
       case ({funct7, funct3})
-        {7'b0000000, 3'b000}: alu_op = 3'd0; // ADD
-        {7'b0100000, 3'b000}: alu_op = 3'd1; // SUB
-        {7'b0000000, 3'b111}: alu_op = 3'd2; // AND
-        {7'b0000000, 3'b110}: alu_op = 3'd3; // OR
-        default : alu_op = 3'd7; // invalid
+        {7'b0000000, 3'b000}: alu_op = ALU_ADD; // ADD
+        {7'b0100000, 3'b000}: alu_op = ALU_SUB; // SUB
+        {7'b0000000, 3'b111}: alu_op = ALU_AND; // AND
+        {7'b0000000, 3'b110}: alu_op = ALU_OR; // OR
+        default : alu_op = ALU_INV; // invalid
       endcase
     end
 
     // -----------------
     // I-type (ADDI)
     // -----------------
-    7'b0010011: begin
-      reg_we  = 1;
-      use_imm = 1;
-      alu_op  = (funct3 == 3'b000) ? 3'd0 : 3'd7; // ADDI or invalid
-//      case (funct3)
-//        3'b000: alu_op = 3'd0; // ADDI
-//      endcase
+    OPC_ITYPE: begin
+      if (funct3 == 3'b000) begin
+        reg_we  = 1;
+        use_imm = 1;
+        alu_op  = ALU_ADD;
+      end
+      else begin
+        alu_op = ALU_INV;
+      end
     end
 
     // -----------------
     // LOAD
     // -----------------
-    7'b0000011: begin
+    OPC_LOAD: begin
       if (funct3 == 3'b010) begin // LW
         reg_we     = 1;
         mem_re     = 1;
         use_imm    = 1;
-        alu_op     = 3'd0; // address calc
+        alu_op     = ALU_ADD; // address calc
         mem_to_reg = 1;
       end
     end
@@ -98,11 +113,11 @@ always_comb begin
     // -----------------
     // STORE
     // -----------------
-    7'b0100011: begin
+    OPC_STORE: begin
       if (funct3 == 3'b010) begin // SW
         mem_we  = 1;
         use_imm = 1;
-        alu_op  = 3'd0;
+        alu_op  = ALU_ADD;
       end
     end
 

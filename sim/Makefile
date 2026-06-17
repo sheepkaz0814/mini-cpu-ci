@@ -12,7 +12,8 @@ VERILOG_SOURCES = ../rtl/top.sv \
 				../rtl/core/regfile.sv \
 				../rtl/core/decoder.sv \
 				../rtl/core/pc.sv \
-				../rtl/mem/inst_mem.sv
+				../rtl/mem/inst_mem.sv  
+				../rtl/mem/data_mem.sv 
 
 include $(shell cocotb-config --makefiles)/Makefile.sim
 

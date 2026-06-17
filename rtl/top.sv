@@ -49,6 +49,8 @@ module cpu_top;
   logic [31:0] pc;
   logic [31:0] inst;
   logic rst;
+  // writeback control
+  logic        mem_to_reg;
 
   decoder u_decoder (
     .inst(inst),
@@ -69,10 +71,7 @@ module cpu_top;
   // -----------------
   logic [31:0] rs1_data, rs2_data;
   logic [31:0] wb_data;
-  logic        mem_to_reg;
   logic [31:0] mem_rdata;
-
-  assign mem_rdata = 32'hDEADBEEF;
 
   regfile u_regfile (
     .clk(clk),
@@ -102,6 +101,17 @@ module cpu_top;
     .b(alu_b),
     .op(alu_op),
     .y(alu_y)
+  );
+
+  // -----------------
+  // Data Memory
+  // -----------------
+  data_mem u_dmem (
+    .clk   (clk),
+    .we    (mem_we),
+    .addr  (alu_y),
+    .wdata (rs2_data),
+    .rdata (mem_rdata)
   );
 
   // -----------------
