@@ -4,7 +4,7 @@ module inst_mem (
 );
 
   logic [31:0] mem [0:15];
-
+/*
   initial begin
     // ADDI x1, x0, 5
     mem[0] = 32'b000000000101_00000_000_00001_0010011;
@@ -19,7 +19,19 @@ module inst_mem (
     // OR x6, x1, x2
     mem[5] = 32'b0000000_00010_00001_110_00110_0110011;
 end 
+*/
+//  assign inst = mem[addr[5:2]]; // wordアドレス
 
-  assign inst = mem[addr[5:2]]; // wordアドレス
+always_comb begin
+    case (addr)
 
+      32'd0 : inst = 32'h01000093; // addi x1,x0,16
+      32'd4 : inst = 32'h07B00113; // addi x2,x0,123
+      32'd8 : inst = 32'h0020A023; // sw x2,0(x1)
+      32'd12: inst = 32'h0000A183; // lw x3,0(x1)
+
+      default: inst = 32'h00000013; // nop(addi x0,x0,0)
+
+    endcase
+end
 endmodule
