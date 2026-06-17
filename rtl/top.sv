@@ -72,7 +72,6 @@ module cpu_top;
   logic        mem_to_reg;
   logic [31:0] mem_rdata;
 
-  assign mem_to_reg = 1'b0; // Load Memory Data to Register File (今回はALUの結果をレジスタに書き込む)
   assign mem_rdata = 32'hDEADBEEF;
 
   regfile u_regfile (
