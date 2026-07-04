@@ -40,11 +40,11 @@ async def test_cpu(dut):
     r2 = int(dut.u_regfile.regs[2].value)
     r3 = int(dut.u_regfile.regs[3].value)
 
-    assert r1 == 16, \
+    assert r1 == 5, \
         f"FAILED: Expected r1=16, got {r1}"
 
-    assert r2 == 123, \
+    assert r2 == 5, \
         f"FAILED: Expected r2=123, got {r2}"
 
-    assert r3 == 123, \
+    assert r3 == 2, \
         f"FAILED: Expected r3=123, got {r3}"

@@ -188,7 +188,18 @@ Register File
 [11:7 ] imm[4:0]
 [6 :0 ] opcode
 ```
+#### B-Type
 
+```text
+[31]    imm[12]
+[30:25] imm[10:5]
+[24:20] rs2
+[19:15] rs1
+[14:12] funct3
+[11:8]  imm[4:1]
+[7]     imm[11]
+[6:0]   opcode
+```
 ### Supported Instructions
 
 | Instruction    | Opcode  | Funct3  | Funct7               | Description |
@@ -200,7 +211,7 @@ Register File
 | ADDI | 0010011 | 000     |    -    | rd = rs1 + imm       |
 | LW   | 0000011 | 010     |    -    | rd = MEM[rs1 + imm]  |
 | SW   | 0100011 | 010     |    -    | MEM[rs1 + imm] = rs2 |
-
+| BEQ  | 1100011 | 000 | - | if (rs1 == rs2) PC = PC + imm |
 ### ALU Operations
 
 | alu_op | Operation |
@@ -242,7 +253,7 @@ mem[address[9:2]]
 | use_imm | Select immediate operand |
 | mem_to_reg | Select memory data for writeback |
 | alu_op | ALU operation select |
-
+| branch_op | Branch operation selector |
 ### Planned ISA Extensions
 
 | Instruction | Status |
@@ -254,7 +265,14 @@ mem[address[9:2]]
 | SLL | Planned |
 | SRL | Planned |
 | SLT | Planned |
-
+| Instruction | Status |
+|-------------|---------|
+| JAL | Planned |
+| JALR | Planned |
+| XOR | Planned |
+| SLL | Planned |
+| SRL | Planned |
+| SLT | Planned |
 ---
 
 # Development Environment

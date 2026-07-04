@@ -25,12 +25,13 @@ end
 always_comb begin
     case (addr)
 
-      32'd0 : inst = 32'h01000093; // addi x1,x0,16
-      32'd4 : inst = 32'h07B00113; // addi x2,x0,123
-      32'd8 : inst = 32'h0020A023; // sw x2,0(x1)
-      32'd12: inst = 32'h0000A183; // lw x3,0(x1)
+      32'd0 : inst = 32'h00500093; // addi x1, x0, 5
+      32'd4 : inst = 32'h00500113; // addi x2, x0, 5
+      32'd8 : inst = 32'h00208463; // beq  x1, x2, +8 (skip next instruction)
+      32'd12: inst = 32'h00100193; // addi x3, x0, 1 (should be skipped)
+      32'd16: inst = 32'h00200193; // addi x3, x0, 2 (should execute)
 
-      default: inst = 32'h00000013; // nop(addi x0,x0,0)
+      default: inst = 32'h00000013; // nop (addi x0, x0, 0)
 
     endcase
 end

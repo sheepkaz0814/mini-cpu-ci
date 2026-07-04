@@ -1,7 +1,8 @@
 module alu (
   input  logic [31:0] a, b,
-  input  logic [2:0] op,
-  output logic [31:0] y
+  input  logic [2:0]  op,
+  output logic [31:0] y,
+  output logic        zero
 );
 always_comb begin
   case (op)
@@ -12,4 +13,8 @@ always_comb begin
     default: y = 32'd0;
   endcase
 end
+
+// Equality comparison used by branch instructions
+assign zero = (a == b);
+
 endmodule

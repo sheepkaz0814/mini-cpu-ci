@@ -42,15 +42,17 @@ module cpu_top;
   // -----------------
   // decoder出力
   // -----------------
+  logic [31:0] inst;
   logic [4:0] rs1, rs2, rd;
   logic [31:0] imm;
   logic [2:0] alu_op;
   logic reg_we, mem_we, mem_re, use_imm;
   logic [31:0] pc;
-  logic [31:0] inst;
-  logic rst;
+  logic rst = 1'b0;
   // writeback control
   logic        mem_to_reg;
+  logic [2:0]  branch_op;
+  logic        zero;
 
   decoder u_decoder (
     .inst(inst),
@@ -63,7 +65,8 @@ module cpu_top;
     .mem_we(mem_we),
     .mem_re(mem_re),
     .use_imm(use_imm),
-    .mem_to_reg(mem_to_reg)
+    .mem_to_reg(mem_to_reg),
+    .branch_op(branch_op)
   );
 
   // -----------------
@@ -100,7 +103,8 @@ module cpu_top;
     .a(rs1_data),
     .b(alu_b),
     .op(alu_op),
-    .y(alu_y)
+    .y(alu_y),
+    .zero(zero)
   );
 
   // -----------------
@@ -122,6 +126,9 @@ module cpu_top;
 pc u_pc (
   .clk(clk),
   .rst(rst),
+  .branch_op(branch_op),
+  .zero(zero),
+  .branch_offset(imm),
   .pc(pc)
 );
 
