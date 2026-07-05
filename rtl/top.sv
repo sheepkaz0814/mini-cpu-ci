@@ -53,6 +53,8 @@ module cpu_top;
   logic        mem_to_reg;
   logic [2:0]  branch_op;
   logic        zero;
+  logic        lt;
+  logic        ltu;
 
   decoder u_decoder (
     .inst(inst),
@@ -104,7 +106,9 @@ module cpu_top;
     .b(alu_b),
     .op(alu_op),
     .y(alu_y),
-    .zero(zero)
+    .zero(zero),
+    .lt(lt),
+    .ltu(ltu)
   );
 
   // -----------------
@@ -128,6 +132,8 @@ pc u_pc (
   .rst(rst),
   .branch_op(branch_op),
   .zero(zero),
+  .lt(lt),
+  .ltu(ltu),
   .branch_offset(imm),
   .pc(pc)
 );

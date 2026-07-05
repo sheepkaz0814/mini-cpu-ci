@@ -1,4 +1,5 @@
 module decoder (
+  // decoder for RISC-V instructions
   input  logic [31:0] inst,
 //  input  logic        mem_to_reg, // Load Memory Data to Register File
   // レジスタ
@@ -35,6 +36,11 @@ localparam ALU_INV = 3'd7;
 // Branch operations
 localparam BR_NONE = 3'd0;
 localparam BR_BEQ  = 3'd1;
+localparam BR_BNE  = 3'd2;
+localparam BR_BLT  = 3'd3;
+localparam BR_BGE  = 3'd4;
+localparam BR_BLTU = 3'd5;
+localparam BR_BGEU = 3'd6;
 
 assign opcode = inst[6:0];
 assign rd     = inst[11:7];
@@ -132,9 +138,15 @@ always_comb begin
     // BRANCH
     // -----------------
     OPC_BRANCH: begin
-      if (funct3 == 3'b000) begin // BEQ
-        branch_op = BR_BEQ;
-      end
+      unique case (funct3)
+        3'b000: branch_op = BR_BEQ;   // BEQ
+        3'b001: branch_op = BR_BNE;   // BNE
+        3'b100: branch_op = BR_BLT;   // BLT
+        3'b101: branch_op = BR_BGE;   // BGE
+        3'b110: branch_op = BR_BLTU;  // BLTU
+        3'b111: branch_op = BR_BGEU;  // BGEU
+        default: branch_op = BR_NONE;
+      endcase
     end
 
     default : begin
